@@ -11,17 +11,17 @@ import com.dhiraj.repository.UserRepository;
 
 @Service
 public class UserServiceImplementation implements UserService {
-	
+
 	private UserRepository userRepository;
 	private JwtProvider jwtProvider;
-	
+
 	public UserServiceImplementation(
 			UserRepository userRepository,
 			JwtProvider jwtProvider) {
-		
+
 		this.userRepository=userRepository;
 		this.jwtProvider=jwtProvider;
-		
+
 	}
 
 	@Override
@@ -32,13 +32,13 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public User findUserProfileByJwt(String jwt) throws UserException {
-		
+
 		String email=jwtProvider.getEmailFromJwtToken(jwt);
-		
+
 		System.out.println("email"+email);
-		
+
 		User user=userRepository.findByEmail(email);
-		
+
 		if(user==null) {
 			throw new UserException("user not exist with email "+email);
 		}
@@ -48,9 +48,9 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public User updateUser(Long userid,User req) throws UserException {
-		
+
 		User user=findUserById(userid);
-		
+
 		if(req.getFullName()!= null) {
 			user.setFullName(req.getFullName());
 		}
@@ -60,27 +60,21 @@ public class UserServiceImplementation implements UserService {
 		if(req.getBackgroundImage()!=null) {
 			user.setBackgroundImage(req.getBackgroundImage());
 		}
-		if(req.getBirthDate()!=null) {
-			user.setBirthDate(req.getBirthDate());
-		}
 		if(req.getLocation()!=null) {
 			user.setLocation(req.getLocation());
 		}
 		if(req.getBio()!=null) {
 			user.setBio(req.getBio());
 		}
-		if(req.getWebsite()!=null) {
-			user.setWebsite(req.getWebsite());
-		}
-		
+
 		return userRepository.save(user);
-		
+
 	}
 
 	@Override
 	public User followUser(Long userId, User user) throws UserException {
 		User followToUser=findUserById(userId);
-		
+
 		if(user.getFollowings().contains(followToUser) && followToUser.getFollowers().contains(user)) {
 			user.getFollowings().remove(followToUser);
 			followToUser.getFollowers().remove(user);
@@ -89,7 +83,7 @@ public class UserServiceImplementation implements UserService {
 					followToUser.getFollowers().add(user);
 					user.getFollowings().add(followToUser);
 		}
-		
+
 		userRepository.save(user);
 		userRepository.save(followToUser);
 		return followToUser;
@@ -97,12 +91,12 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public List<User> searchUser(String query) {
-	
+
 		return userRepository.searchUser(query);
 	}
 
 }
-   
+
 
 
 

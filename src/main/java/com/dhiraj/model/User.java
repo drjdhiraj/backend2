@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,55 +34,54 @@ public class User {
 
     private String location;
 
-    private String website;
-
-    private String birthDate;
-
     @Column(nullable = false, unique = true)
     private String email;
 
     private String password;
 
-    private String mobile;
 
     private String image;
 
     private String backgroundImage;
-    
+
     private String bio;
-    
-    private boolean req_user;
-    
+
+
     private boolean login_with_google;
-    
-    private boolean is_req_user=false;
 
-    @Column(name = "is_admin")
 
-    public String is_Admin = "NO";
 
-    
-//    @ManyToMany(mappedBy = "retwitUser",cascade = CascadeType.ALL)
+
+//    @ManyToMany(mappedBy = "retwitUser",cascade = CascadeType.ALL, or )
 //    private List<Twit> retwits = new ArrayList<>();
-    
+
     @JsonIgnore
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Twit> twit = new ArrayList<>();
-    
+
     @JsonIgnore
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL , orphanRemoval = true )
     private List<Like> likes  = new ArrayList<>();
-    
-    @Embedded
-    private Varification verification;
-    
+
+
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     private List<User>followers=new ArrayList<>();
-    
+
     @JsonIgnore
-    @ManyToMany(mappedBy = "followers")
+    @ManyToMany(mappedBy = "followers", cascade = CascadeType.ALL )
     private List<User>followings=new ArrayList<>();
-    
-    
+
+
+    public String getPassword() {
+        return "";
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+
+
 }

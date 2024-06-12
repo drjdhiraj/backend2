@@ -1,12 +1,13 @@
 package com.dhiraj.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Admin {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String username;
     private String password;
 
@@ -14,6 +15,7 @@ public class Admin {
     public Admin() {}
 
     public Admin(Long id, String username, String password) {
+
         this.id = id;
         this.username = username;
         this.password = password;

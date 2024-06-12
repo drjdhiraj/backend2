@@ -2,6 +2,7 @@ package com.dhiraj.controller;
 
 import java.util.List;
 
+import com.dhiraj.repository.TwitRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,13 +32,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/api/twits")
 @Tag(name="Twit Management", description = "Endpoints for managing twits")
 public class TwitController {
-	
+
+	private final TwitRepository twitRepository;
 	private TwitService twitService;
 	private UserService userService;
 	
-	public TwitController(TwitService twitService,UserService userService) {
+	public TwitController(TwitService twitService, UserService userService, TwitRepository twitRepository) {
 		this.twitService=twitService;
 		this.userService=userService;
+		this.twitRepository = twitRepository;
 	}
 	
 	@PostMapping("/create")
@@ -135,5 +138,13 @@ public class TwitController {
 		List<TwitDto> twitDtos=TwitDtoMapper.toTwitDtos(twits,reqUser);
 		return new ResponseEntity<List<TwitDto>>(twitDtos,HttpStatus.OK);
 	}
+
+
+
+
+
+
+
+
 
 }

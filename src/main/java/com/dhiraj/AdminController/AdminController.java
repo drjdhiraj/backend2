@@ -43,20 +43,19 @@ public class AdminController {
         return userRepository.count();
     }
 
-    @GetMapping("/getAllTwits")
-    public List<Twit> getAllTwits() {
-        return twitService.findAllTwit();
-    }
 
     @GetMapping("/getUser")
     public List<User> getUser(@RequestParam String query) {
         return userService.searchUser(query);
     }
 
-    @DeleteMapping("/users/{userId}")
+    @DeleteMapping("/users/delete/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         try {
             if (userRepository.existsById(userId)) {
+
+
+
                 userRepository.deleteById(userId);
                 return ResponseEntity.ok("User deleted successfully");
             } else {
@@ -70,7 +69,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public Admin getAdmin(@RequestParam String username) {
-        return adminRepository.findAdminByUsername(username);
+        return adminRepository.findTopByUsername(username);
     }
 
 
@@ -78,6 +77,28 @@ public class AdminController {
     public Long gettweetcount() {
         return twitRepository.count();
     }
+
+    @GetMapping ("/getAllAdmin")
+    List<Admin> getall(){
+        return adminRepository.findAll();
+    }
+
+    @GetMapping ("/getloc")
+    List<Object> getallloc(){
+        return  userRepository.findLocationCounts();
+    }
+
+    @PostMapping("/addadmin")
+    public String addAdmin(@RequestBody Admin admin) {
+        adminRepository.save(admin);
+        return "Admin added successfully";
+    }
+
+    @DeleteMapping("twit/{id}")
+    public void deleteTweet(@PathVariable Long id) {
+        twitRepository.deleteById(id);
+    }
+
 
 
 }

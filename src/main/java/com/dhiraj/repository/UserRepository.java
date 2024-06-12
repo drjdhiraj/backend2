@@ -16,7 +16,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 List<User> searchUser(@Param("query") String query);
 
 
-	User deleteUserById(long id);
+	void deleteById(long id);
+
+
+	@Query("SELECT u.location, COUNT(u) FROM User u GROUP BY u.location")
+	List<Object> findLocationCounts();
+
+	User getFirstByEmailContainingIgnoreCase(String email);
 
 
 

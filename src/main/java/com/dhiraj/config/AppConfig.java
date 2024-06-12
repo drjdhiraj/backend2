@@ -54,7 +54,8 @@ public class AppConfig {
 					"https://technoblogapp.vercel.app/",
                     "http://localhost:4000",
                     "http://localhost:4200",
-					"http://localhost:3000",
+						"http://localhost:3000/",
+						"http://localhost:3000/",
                     "https://twitter-clone-two-woad.vercel.app",
                     "https://twitter-clone-six-kohl.vercel.app"
                 ));

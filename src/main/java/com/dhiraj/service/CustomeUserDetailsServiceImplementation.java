@@ -30,9 +30,9 @@ public class CustomeUserDetailsServiceImplementation implements UserDetailsServi
 		if(user == null || user.isLogin_with_google()) {
 			throw new UsernameNotFoundException("user not found with email "+username);
 		}
-		
+
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		
+
 		return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),authorities);
 		
 	}

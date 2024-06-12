@@ -40,9 +40,6 @@ public class UserDto {
     private List<UserDto>followings=new ArrayList<>();
     
     private boolean followed;
-    
-    private boolean isVerified;
 
-    private String is_Admin;
 
 }

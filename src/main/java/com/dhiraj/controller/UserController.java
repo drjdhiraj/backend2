@@ -43,11 +43,8 @@ private UserService userService;
 			throws UserException{
 
 		User user=userService.findUserProfileByJwt(jwt);
-		user.setPassword(null);
-		user.setReq_user(true);
 		UserDto userDto=UserDtoMapper.toUserDto(user);
 		userDto.setReq_user(true);
-		userDto.setIs_Admin(user.is_Admin);
 		return new ResponseEntity<>(userDto,HttpStatus.ACCEPTED);
 	}
 	
@@ -93,7 +90,6 @@ private UserService userService;
 		User user=userService.findUserProfileByJwt(jwt);
 		
 		User updatedUser=userService.updateUser(user.getId(), req);
-		updatedUser.setPassword(null);
 		UserDto userDto=UserDtoMapper.toUserDto(user);
 		userDto.setReq_user(true);
 		return new ResponseEntity<>(userDto,HttpStatus.ACCEPTED);
